@@ -21,5 +21,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {  //
     // JPQL : Java Persistence Query Language
     @Query(nativeQuery = true, value = "SELECT u FROM UserEntity u WHERE u.name = :name")
     List<UserEntity> findByNameCustom(String name);
-    //@Query(nativeQuery = true)
+    // @Query(nativeQuery = true)
 }//interface

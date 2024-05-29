@@ -38,8 +38,8 @@ public class UserService {
                 .nickname(user.getNickname())
                 .build();
         // .save(엔티티 객체) : insert, update
-        // pk 가 없다면, insert
-        // pk 가 있다면, update
+        //  pk 가 없다면, insert
+        //  pk 가 있다면, update
         return userRepository.save(newUser);
     }
 
