@@ -8,18 +8,21 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-// JpaRepository<entity, 테이블의 pk 자료형>
+// JpaRepository<entity class, 테이블의 pk 자료형>
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {  // 상속을 받으니 extends
-    //List<UserEntity> findAll();
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+    // List<UserEntity> findAll();
     List<UserEntity> findByName(String name);
 
     Optional<UserEntity> findById(int id);
 
-    // raw query 사용
-    // jpa 자체적인 sql => JPQL
+    // raw query 이용
+    // jpa 자체적인 sql(?) -> JPQL
     // JPQL : Java Persistence Query Language
-    @Query(nativeQuery = true, value = "SELECT u FROM UserEntity u WHERE u.name = :name")
+    @Query("SELECT u FROM UserEntity u WHERE u.name = :name")
+    // @Query(nativeQuery = true, value = "SELECT * FROM user WHERE name = :name")
     List<UserEntity> findByNameCustom(String name);
-    // @Query(nativeQuery = true)
+
+    @Query("SELECT u FROM UserEntity u JOIN FETCH u.todos t WHERE u.id = :userId")
+    UserEntity findTodosByUser(int userId);
 }//interface

@@ -19,7 +19,8 @@ public class UserService {
     }
 
     public List<UserEntity> getUsersByName(String name) {
-        return userRepository.findByName(name);
+        // return userRepository.findByName(name);
+        return userRepository.findByNameCustom(name);
     }
 
     public UserEntity getUserById(int id) {
@@ -38,8 +39,8 @@ public class UserService {
                 .nickname(user.getNickname())
                 .build();
         // .save(엔티티 객체) : insert, update
-        //  pk 가 없다면, insert
-        //  pk 가 있다면, update
+        // pk 가 없다면, insert
+        // pk 가 있다면, update
         return userRepository.save(newUser);
     }
 
@@ -63,5 +64,13 @@ public class UserService {
         // userRepository.deleteById(id); // pk id로 삭제
         userRepository.delete(userEntity); // entity 정보로 삭제
         return userEntity;
+    }
+
+    public UserEntity getTodosByUser(int userId) {
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("user doesn't exist"));
+
+        return userRepository.findTodosByUser(userId);
+        // UserEntity { id, name, nickname, todos: [] }
     }
 }//class

@@ -122,4 +122,17 @@ public class UserController {
             );
         }
     }
+
+    @GetMapping("/todos/{userId}")
+    public ResponseEntity<?> getTodosByUser(@PathVariable int userId) {
+        try {
+            return ResponseEntity.ok(userService.getTodosByUser(userId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(
+                    ResErrorDTO.builder()
+                            .error(e.getMessage())
+                            .build()
+            );
+        }
+    }
 }//class
